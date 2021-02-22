@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<style>
+	:root {
+		--main-background-color: #9aff97;
+	}
+
+	body {
+		background-color: var(--main-background-color);
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+		padding: 0px;
+	}
+
+	html {
+		font-family: Verdana, Geneva, Tahoma, sans-serif;
+		font-size: large;
+		height: 100%;
+		width: 100%;
+		margin: 0px;
+		padding: 0px;
+		/* position: relative; */
+	}
+
+	main {
+		width: 100%;
+		margin: 0px;
+		padding: 0px;
+		position: relative;
+	}
+
+	footer {
+		position: absolute;
+
+		bottom: 0px;
+
+		width: 100%;
+		margin: 0px;
+		padding: 0px;
+	}
+
+	#Date-Tags {
+		/* background-color: aqua; */
+		position: absolute;
+		top: 0px;
+		right: 0px;
+
+
+		display: flex;
+		flex-direction: row-reverse;
+	}
+
+	#This-Class-Text {
+		font-size: x-large;
+
+		position: absolute;
+		top: 5vh;
+		left: 6vw;
+	}
+
+	#Class-Name {
+		font-size: 4vw;
+
+		position: absolute;
+		top: 10vh;
+		left: 6vw;
+	}
+
+	#News-Text {
+		position: absolute;
+
+		top: -2em;
+		left: 1em;
+	}
+
+	#News {
+		background-color: rgba(0, 0, 0, 0.3);
+
+		display: flex;
+	}
+
+	#Ao-Tawhiti-Img {
+		position: absolute;
+
+		width: 30vw;
+
+		top: -1em;
+		right: 1em;
+
+		background-color: rgba(0, 0, 0, 0.3);
+		padding: 0.6em;
+		border-radius: 1em;
+	}
+
+	.News-Item {
+		background-color: rgba(255, 255, 255, 0.6);
+		padding: 0.6em;
+		border-radius: 1em;
+		margin: 1em;
+	}
+
+	.Date-Tag {
+		background-color: rgba(255, 255, 255, 0.6);
+		margin: 0.5em;
+		padding: 0.5em;
+		border-radius: 1em;
+	}
+</style>
+
+<head>
+	<title>
+		Ao Tawhiti Tv
+	</title>
+</head>
+
+<body>
+	<main>
+		<span id="This-Class-Text">
+			This class is:
+		</span>
+		<span id="Class-Name">
+			Waves in Light and Sound and Optics
+		</span>
+		<div id="Date-Tags">
+			<span class="Date-Tag" id="Time">
+				1:29<sub>pm</sub>
+			</span>
+			<span class="Date-Tag" id="Date">
+				22<sub>th</sub> of Feb
+			</span>
+		</div>
+	</main>
+	<footer id="News">
+
+		<img src="https://lms.aotawhiti.school.nz/sites/all/themes/best_responsive/images/at_logo_white.png"
+			id="Ao-Tawhiti-Img">
+		<span id="News-Text">
+			News, Events And Information:
+		</span>
+
+		<div class="News-Item">
+			<samp style="font-size: xx-large;">
+				Athletics Day
+			</samp>
+			<br>
+			<samp style="font-size: large;">
+				Thursday the 25th of February
+			</samp>
+		</div>
+		<div class="News-Item">
+			<samp style="font-size: xx-large; text-align: center; display: block; margin-bottom: 0.4em;">
+				Weather
+			</samp>
+			<iframe id="widget-iframe" height="235"
+				src="https://services.metservice.com/weather-widget/widget?params=blue|medium|portrait|days-3|modern&loc=christchurch&type=urban"
+				allowtransparency="true" style="border:none; border-radius: 1em;"></iframe>
+		</div>
+	</footer>
+</body>
+
+<script>
+	function UpdateTime() {
+		let TimeSpan = document.getElementById("Time")
+		let DateSpan = document.getElementById("Date")
+
+		let Now = new Date(Date.now())
+
+		let DateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+
+		TimeSpan.innerText = new Date(Date.now()).toLocaleTimeString()
+		DateSpan.innerText = new Date(Date.now()).toLocaleDateString("en-UK", DateOptions)
+	}
+
+	setInterval(UpdateTime, 100)
+</script>
+
+</html>
