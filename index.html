@@ -85,7 +85,7 @@
 
 		width: 30vw;
 
-		top: -1em;
+		top: -4em; /* ToDo Fix bad position */
 		right: 1em;
 
 		background-color: rgba(0, 0, 0, 0.3);
@@ -147,18 +147,21 @@
 			<samp style="font-size: large;">
 				Thursday the 25th of February
 			</samp>
+			<br>
+			<samp style="font-size: medium;">
+				Other Info on athletics day!
+			</samp>
 		</div>
 		<div class="News-Item">
 			<samp style="font-size: xx-large; text-align: center; display: block; margin-bottom: 0.4em;">
 				Weather
 			</samp>
-			<iframe id="widget-iframe" height="235"
+			<iframe id="widget-iframe" height="195"
 				src="https://services.metservice.com/weather-widget/widget?params=blue|medium|portrait|days-3|modern&loc=christchurch&type=urban"
 				allowtransparency="true" style="border:none; border-radius: 1em;"></iframe>
 		</div>
 	</footer>
 </body>
-
 <script>
 	function UpdateTime() {
 		let TimeSpan = document.getElementById("Time")
@@ -173,6 +176,9 @@
 	}
 
 	setInterval(UpdateTime, 100)
+</script>
+<script>
+	
 </script>
 
 </html>
