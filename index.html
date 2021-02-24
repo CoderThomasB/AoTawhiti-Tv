@@ -93,6 +93,8 @@
 		background-color: rgba(0, 0, 0, 0.3);
 
 		display: flex;
+
+		align-items: center;
 	}
 
 	#Credit {
@@ -166,7 +168,7 @@
 		</span>
 	</main>
 	<footer id="News">
-		<div class="News-Item">
+		<!-- <div class="News-Item">
 			<samp style="font-size: xx-large;">
 				Athletics Day
 			</samp>
@@ -178,7 +180,7 @@
 			<samp style="font-size: medium;">
 				Other Info on athletics day!
 			</samp>
-		</div>
+		</div> -->
 		<div class="News-Item">
 			<samp style="font-size: xx-large; text-align: center; display: block; margin-bottom: 0.4em;">
 				Weather
@@ -187,6 +189,13 @@
 				src="https://services.metservice.com/weather-widget/widget?params=blue|medium|portrait|days-3|modern&loc=christchurch&type=urban"
 				allowtransparency="true" style="border:none; border-radius: 1em;"></iframe>
 		</div>
+		<samp style="
+		color:lightgray;
+		font-size: x-large;
+		margin-left: 1em;
+		">
+			No more news ...
+		</samp>
 	</footer>
 </body>
 <script>
@@ -221,16 +230,137 @@
 	ConnectToNotificationServer()
 </script>
 <script>
+	function IsValidPos(col, row) {
+		if (col === 1) return false
+		if (row === 1) return false
+		return true
+	}
+
+	function GetBlockColour(col, row) {
+		if (col >= 8 && col <= 10 &&
+			row >= 2 && row <= 19
+		) return "Red"
+		if (col >= 8 && col <= 10 &&
+			row >= 21 && row <= 38
+		) return "Green"
+		if (col >= 8 && col <= 10 &&
+			row >= 41 && row <= 60
+		) return "Blue"
+		if (col >= 8 && col <= 10 &&
+			row >= 63 && row <= 83
+		) return "Purple"
+		if (col >= 2 && col <= 4 &&
+			row >= 63 && row <= 82
+		) return "Yellow"
+
+		return false
+	}
+
 	function UpdateTimeTableData() {
 		var xhttp = new XMLHttpRequest();
+		let TimeTableData = {
+			"Red": {},
+			"Green": {},
+			"Blue": {},
+			"Blue": {},
+			"Purple": {},
+			"Yellow": {},
+		}
 		xhttp.onload = () => {
-			console.log(xhttp.responseText)
+			let spreadsheetsJSON = JSON.parse(xhttp.responseText)
+			let ColRowLookup = {}
+			spreadsheetsJSON.feed.entry.forEach(element => {
+				// console.log(element)
+				let col = parseInt(element["gs$cell"].col);
+				let row = parseInt(element["gs$cell"].row);
+				let text = element["gs$cell"]["$t"]
+
+				if (!IsValidPos(col, row)) return
+
+				let BlockColour = GetBlockColour(col, row)
+				if (!BlockColour) return
+
+				if ((col - 1) % 3 === 0) {
+					TimeTableData[BlockColour][text] = {}
+					if (ColRowLookup[col] === undefined) ColRowLookup[col] = {}
+					ColRowLookup[col][row] = text
+				}
+			});
+			spreadsheetsJSON.feed.entry.forEach(element => {
+				// console.log(element)
+				let col = parseInt(element["gs$cell"].col);
+				let row = parseInt(element["gs$cell"].row);
+				let text = element["gs$cell"]["$t"]
+
+				if (!IsValidPos(col, row)) return
+
+				let BlockColour = GetBlockColour(col, row)
+				if (!BlockColour) return
+
+				// console.log(col)
+				if ((col - 1) % 3 === 1) {
+					let RoomName = ColRowLookup[col + 2][row]
+					TimeTableData[BlockColour][RoomName].code = text
+				}
+				if ((col - 1) % 3 === 2) {
+					let RoomName = ColRowLookup[col + 1][row]
+					TimeTableData[BlockColour][RoomName].teacher = text
+				}
+			});
+			console.log(TimeTableData)
 		};
-		xhttp.open("GET", "http://" + location.hostname + ":8924", true);
+		xhttp.open("GET", "https://spreadsheets.google.com/feeds/cells/1MOTvNV6NNkCuLdYN3JU2ctiFhELxWg1EW_qusrWEGHo/1/public/full?alt=json", true);
 		xhttp.send();
 	}
 
-	setInterval(UpdateTimeTableData, 10000)
+	// setInterval(UpdateTimeTableData, 10000)
+</script>
+<script>
+	function GetBlockNow() {
+		let now = new Date()
+
+		if (now.getHours() > 15) return "EndOfSchool"
+
+		if (now.getDay() < 9 ) return "BeforeSchool"
+
+		if (now.getHours() === 11 && now.getMinutes < 20) return "MorningBreak"
+
+		if (now.getHours() === 12 && now.getMinutes > 20) return "Lunch"
+
+		if (now.getDay() === 0 ) return "NoSchool"
+
+		if (now.getDay() === 1 ) {
+			if(now.getHours() < 11) return "HomeBase"
+			if(now.getHours() < 13) return "Red"
+			if(now.getHours() < 14) return "Yellow"
+			if(now.getHours() < 15) return "Green"
+		}
+		if (now.getDay() === 2 ) {
+			if(now.getHours() < 10) return "HomeBase"
+			if(now.getHours() < 11) return "Blue"
+			if(now.getHours() < 13) return "Purple"
+			if(now.getHours() < 14) return "Red"
+			if(now.getHours() < 15) return "Yellow"
+		}
+		if (now.getDay() === 3 ) {
+			if(now.getHours() < 10) return "Red"
+			if(now.getHours() < 11) return "Green"
+			if(now.getHours() < 13) return "Blue"
+			if(now.getHours() < 14) return "Purple"
+			if(now.getHours() < 15) return "EndOfSchool"
+		}
+		if (now.getDay() === 4 ) {
+			if(now.getHours() < 10) return "HomeBase"
+			if(now.getHours() < 11) return "Yellow"
+			if(now.getHours() < 13) return "Green"
+			if(now.getHours() < 14) return "Blue"
+			if(now.getHours() < 15) return "Purple"
+		}
+		if (now.getDay() === 5 ) {
+			if(now.getHours() < 11) return "HomeBase"
+			if(now.getHours() < 15) return "Orange"
+		}
+	}
 </script>
 
 </html>
