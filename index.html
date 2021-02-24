@@ -328,6 +328,7 @@
 		if (now.getHours() === 12 && now.getMinutes > 20) return "Lunch"
 
 		if (now.getDay() === 0 ) return "NoSchool"
+		if (now.getDay() === 6 ) return "NoSchool"
 
 		if (now.getDay() === 1 ) {
 			if(now.getHours() < 11) return "HomeBase"
