@@ -86,6 +86,23 @@
 		left: 6vw;
 	}
 
+	#Class-Tags {
+		font-size: 1.5vw;
+		display: block;
+
+		position: absolute;
+		top: calc(10vh + 4em);
+		left: 6vw;
+	}
+
+	.Class-Tag {
+		margin-top: 0.5em;
+	}
+
+	#Room-Name-Input {
+		width: 3em;
+	}
+
 	#News-Text {
 		position: absolute;
 
@@ -99,6 +116,8 @@
 		background-color: rgba(0, 0, 0, 0.3);
 
 		display: flex;
+
+		overflow: hidden;
 
 		align-items: center;
 	}
@@ -148,17 +167,30 @@
 <body>
 	<main>
 		<span id="This-Class-Text">
-			Now happing:
+			Now happening:
 		</span>
 		<span id="Class-Title">
 			Loading...
 		</span>
+		<div id="Class-Tags">
+			<div class="Class-Tag">
+				<label>Room name:</label>
+				<input oninput="RoomName = this.value; UpdateClassTitle()" type="text" id="Room-Name-Input">
+			</div>
+			<div id="Block-Color-Div" class="Class-Tag">
+				<label>Block color:</label>
+				<samp id="Block-Color-Span">Unknown</samp>
+			</div>
+		</div>
 		<div id="Date-Tags">
 			<span class="Date-Tag" id="Time">
 				1:29<sub>pm</sub>
 			</span>
 			<span class="Date-Tag" id="Date">
 				22<sub>th</sub> of Feb
+			</span>
+			<span class="Date-Tag" id="Next-Class-Span">
+				10minutes until Next Class.
 			</span>
 		</div>
 
@@ -322,11 +354,20 @@
 	// setInterval(UpdateTimeTableData, 10000)
 </script>
 <script>
-	var RoomName = "4.6"
+	var RoomName = document.getElementById("Room-Name-Input").value
+
 	var NowBlock = ""
 
-	function GetBlockNow() {
-		let now = new Date()
+	function GetBlockNow(now) {
+		if (RoomName == undefined) return "NoRoomNameDefined"
+
+		if (
+			TimeTableData["Red"][RoomName] == undefined &&
+			TimeTableData["Blue"][RoomName] == undefined &&
+			TimeTableData["Green"][RoomName] == undefined &&
+			TimeTableData["Purple"][RoomName] == undefined &&
+			TimeTableData["Yellow"][RoomName] == undefined
+		) return "NoRoomNameDefined"
 
 		if (now.getDay() === 0) return "NoSchool"
 		if (now.getDay() === 6) return "NoSchool"
@@ -373,11 +414,24 @@
 	}
 
 	setInterval(() => {
-		if (NowBlock != GetBlockNow()) {
-			NowBlock = GetBlockNow()
+		let now = new Date()
+
+		if (NowBlock != GetBlockNow(now)) {
+			NowBlock = GetBlockNow(now)
 			UpdateTimeTableData()
 			UpdateClassTitle()
 		}
+
+		let NextDate = new Date(Date.now() + 10 * 60000)
+		let NextBlock = GetBlockNow(NextDate)
+		let NextClassSpan = document.getElementById("Next-Class-Span")
+		if (NextBlock !== NowBlock) {
+			NextClassSpan.style.display = "block"
+			NextClassSpan.innerText = "Next up is " + GetDisplayTextFoBlock(NextBlock)
+		} else {
+			NextClassSpan.style.display = "none"
+		}
+		
 	}, 1000)
 </script>
 <script>
@@ -385,12 +439,20 @@
 		let ClassTitle = document.getElementById("Class-Title")
 		let body = document.querySelector("body")
 
-		ClassTitle.innerText = GetDisplayTextFoNowBlock()
-		body.style.backgroundColor = GetBackgroundColour()
+		ClassTitle.innerText = GetDisplayTextFoBlock(NowBlock)
+		body.style.backgroundColor = GetBackgroundCssColour()
+		if (IsBlockAColour()) {
+			document.getElementById("Block-Color-Div").style.display = "block"
+			document.getElementById("Block-Color-Span").innerText = NowBlock
+		} else {
+			document.getElementById("Block-Color-Div").style.display = "none"
+		}
 	}
 
-	function GetDisplayTextFoNowBlock() {
-		switch (NowBlock) {
+	function GetDisplayTextFoBlock(Block) {
+		switch (Block) {
+			case "NoRoomNameDefined":
+				return "Please enter valid room name."
 			case "HomeBase":
 				return "Home base"
 			case "EndOfSchool":
@@ -407,14 +469,33 @@
 				return "Friday Hapori"
 			default:
 				try {
-					return TimeTableData[NowBlock][RoomName].code
+					return TimeTableData[Block][RoomName].code
 				} catch (e) {
 					return "No class"
 				}
 		}
 	}
 
-	function GetBackgroundColour() {
+	function IsBlockAColour() {
+		switch (NowBlock) {
+			case "Red":
+				return true
+			case "Green":
+				return true
+			case "Blue":
+				return true
+			case "Yellow":
+				return true
+			case "Purple":
+				return true
+			case "Orange":
+				return true
+			default:
+				return false
+		}
+	}
+
+	function GetBackgroundCssColour() {
 		switch (NowBlock) {
 			case "Red":
 				return "var(--red-background-color)"
