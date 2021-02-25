@@ -2,11 +2,17 @@
 <html>
 <style>
 	:root {
-		--main-background-color: #9aff97;
+		--unknown-background-color: var(--green-background-color);
+		--green-background-color: hsl(120, 100%, 83%);
+		--blue-background-color: hsl(197, 100%, 83%);
+		--red-background-color: hsl(0, 100%, 83%);
+		--purple-background-color: hsl(318, 100%, 83%);
+		--orange-background-color: hsl(51, 100%, 66%);
+		--yellow-background-color: hsl(71, 100%, 83%);
 	}
 
 	body {
-		background-color: var(--main-background-color);
+		background-color: var(--unknown-background-color);
 		height: 100%;
 		width: 100%;
 		margin: 0px;
@@ -72,7 +78,7 @@
 		left: 6vw;
 	}
 
-	#Class-Name {
+	#Class-Title {
 		font-size: 4vw;
 
 		position: absolute;
@@ -142,10 +148,10 @@
 <body>
 	<main>
 		<span id="This-Class-Text">
-			This class is:
+			Now happing:
 		</span>
-		<span id="Class-Name">
-			Waves in Light and Sound and Optics
+		<span id="Class-Title">
+			Loading...
 		</span>
 		<div id="Date-Tags">
 			<span class="Date-Tag" id="Time">
@@ -159,7 +165,7 @@
 		<div id="Credit">
 			<img src="https://lms.aotawhiti.school.nz/sites/all/themes/best_responsive/images/at_logo_white.png">
 			<span>
-				Website created by Thomas Booker.
+				This website was created by Thomas Booker.
 			</span>
 		</div>
 
@@ -168,19 +174,19 @@
 		</span>
 	</main>
 	<footer id="News">
-		<!-- <div class="News-Item">
+		<div class="News-Item">
 			<samp style="font-size: xx-large;">
 				Athletics Day
 			</samp>
 			<br>
 			<samp style="font-size: large;">
-				Thursday the 25th of February
+				Thursday the 11<sup>th</sup> of March
 			</samp>
 			<br>
 			<samp style="font-size: medium;">
-				Other Info on athletics day!
+				Other Info on athletics day need!
 			</samp>
-		</div> -->
+		</div>
 		<div class="News-Item">
 			<samp style="font-size: xx-large; text-align: center; display: block; margin-bottom: 0.4em;">
 				Weather
@@ -216,18 +222,18 @@
 
 <script>
 
-	var NotificationServerConnection;
-	function ConnectToNotificationServer() {
-		// Create WebSocket connection.
-		NotificationServerConnection = new WebSocket("ws://" + location.hostname + ":8924" + location.pathname);
+	// var NotificationServerConnection;
+	// function ConnectToNotificationServer() {
+	// 	// Create WebSocket connection.
+	// 	NotificationServerConnection = new WebSocket("ws://" + location.hostname + ":8924" + location.pathname);
 
-		// Listen for messages
-		NotificationServerConnection.addEventListener('message', function (event) {
-			console.log('Message from server ', event.data);
-		});
-	}
+	// 	// Listen for messages
+	// 	NotificationServerConnection.addEventListener('message', function (event) {
+	// 		console.log('Message from server ', event.data);
+	// 	});
+	// }
 
-	ConnectToNotificationServer()
+	// ConnectToNotificationServer()
 </script>
 <script>
 	function IsValidPos(col, row) {
@@ -256,16 +262,16 @@
 		return false
 	}
 
+	var TimeTableData = {
+		"Red": {},
+		"Green": {},
+		"Blue": {},
+		"Purple": {},
+		"Yellow": {},
+	}
+
 	function UpdateTimeTableData() {
 		var xhttp = new XMLHttpRequest();
-		let TimeTableData = {
-			"Red": {},
-			"Green": {},
-			"Blue": {},
-			"Blue": {},
-			"Purple": {},
-			"Yellow": {},
-		}
 		xhttp.onload = () => {
 			let spreadsheetsJSON = JSON.parse(xhttp.responseText)
 			let ColRowLookup = {}
@@ -307,7 +313,7 @@
 					TimeTableData[BlockColour][RoomName].teacher = text
 				}
 			});
-			console.log(TimeTableData)
+			// console.log(TimeTableData)
 		};
 		xhttp.open("GET", "https://spreadsheets.google.com/feeds/cells/1MOTvNV6NNkCuLdYN3JU2ctiFhELxWg1EW_qusrWEGHo/1/public/full?alt=json", true);
 		xhttp.send();
@@ -316,52 +322,117 @@
 	// setInterval(UpdateTimeTableData, 10000)
 </script>
 <script>
+	var RoomName = "4.6"
+	var NowBlock = ""
+
 	function GetBlockNow() {
 		let now = new Date()
 
+		if (now.getDay() === 0) return "NoSchool"
+		if (now.getDay() === 6) return "NoSchool"
+
 		if (now.getHours() > 15) return "EndOfSchool"
 
-		if (now.getDay() < 9 ) return "BeforeSchool"
+		if (now.getHours() < 9) return "BeforeSchool"
 
-		if (now.getHours() === 11 && now.getMinutes < 20) return "MorningBreak"
+		if (now.getHours() === 11 && now.getMinutes() < 20) return "MorningBreak"
 
-		if (now.getHours() === 12 && now.getMinutes > 20) return "Lunch"
+		if (now.getHours() === 12 && now.getMinutes() > 20) return "Lunch"
 
-		if (now.getDay() === 0 ) return "NoSchool"
-		if (now.getDay() === 6 ) return "NoSchool"
-
-		if (now.getDay() === 1 ) {
-			if(now.getHours() < 11) return "HomeBase"
-			if(now.getHours() < 13) return "Red"
-			if(now.getHours() < 14) return "Yellow"
-			if(now.getHours() < 15) return "Green"
+		if (now.getDay() === 1) {
+			if (now.getHours() < 11) return "HomeBase"
+			if (now.getHours() < 13) return "Red"
+			if (now.getHours() < 14) return "Yellow"
+			if (now.getHours() < 15) return "Green"
 		}
-		if (now.getDay() === 2 ) {
-			if(now.getHours() < 10) return "HomeBase"
-			if(now.getHours() < 11) return "Blue"
-			if(now.getHours() < 13) return "Purple"
-			if(now.getHours() < 14) return "Red"
-			if(now.getHours() < 15) return "Yellow"
+		if (now.getDay() === 2) {
+			if (now.getHours() < 10) return "HomeBase"
+			if (now.getHours() < 11) return "Blue"
+			if (now.getHours() < 13) return "Purple"
+			if (now.getHours() < 14) return "Red"
+			if (now.getHours() < 15) return "Yellow"
 		}
-		if (now.getDay() === 3 ) {
-			if(now.getHours() < 10) return "Red"
-			if(now.getHours() < 11) return "Green"
-			if(now.getHours() < 13) return "Blue"
-			if(now.getHours() < 14) return "Purple"
-			if(now.getHours() < 15) return "EndOfSchool"
+		if (now.getDay() === 3) {
+			if (now.getHours() < 10) return "Red"
+			if (now.getHours() < 11) return "Green"
+			if (now.getHours() < 13) return "Blue"
+			if (now.getHours() < 14) return "Purple"
+			if (now.getHours() < 15) return "EndOfSchool"
 		}
-		if (now.getDay() === 4 ) {
-			if(now.getHours() < 10) return "HomeBase"
-			if(now.getHours() < 11) return "Yellow"
-			if(now.getHours() < 13) return "Green"
-			if(now.getHours() < 14) return "Blue"
-			if(now.getHours() < 15) return "Purple"
+		if (now.getDay() === 4) {
+			if (now.getHours() < 10) return "HomeBase"
+			if (now.getHours() < 11) return "Yellow"
+			if (now.getHours() < 13) return "Green"
+			if (now.getHours() < 14) return "Blue"
+			if (now.getHours() < 15) return "Purple"
 		}
-		if (now.getDay() === 5 ) {
-			if(now.getHours() < 11) return "HomeBase"
-			if(now.getHours() < 15) return "Orange"
+		if (now.getDay() === 5) {
+			if (now.getHours() < 11) return "HomeBase"
+			if (now.getHours() < 15) return "Orange"
 		}
 	}
+
+	setInterval(() => {
+		if (NowBlock != GetBlockNow()) {
+			NowBlock = GetBlockNow()
+			UpdateTimeTableData()
+			UpdateClassTitle()
+		}
+	}, 1000)
+</script>
+<script>
+	function UpdateClassTitle() {
+		let ClassTitle = document.getElementById("Class-Title")
+		let body = document.querySelector("body")
+
+		ClassTitle.innerText = GetDisplayTextFoNowBlock()
+		body.style.backgroundColor = GetBackgroundColour()
+	}
+
+	function GetDisplayTextFoNowBlock() {
+		switch (NowBlock) {
+			case "HomeBase":
+				return "Home base"
+			case "EndOfSchool":
+				return "End of school"
+			case "BeforeSchool":
+				return "Before school"
+			case "MorningBreak":
+				return "Morning break"
+			case "Lunch":
+				return "Lunch"
+			case "NoSchool":
+				return "No school today"
+			case "Orange":
+				return "Friday Hapori"
+			default:
+				try {
+					return TimeTableData[NowBlock][RoomName].code
+				} catch (e) {
+					return "No class"
+				}
+		}
+	}
+
+	function GetBackgroundColour() {
+		switch (NowBlock) {
+			case "Red":
+				return "var(--red-background-color)"
+			case "Green":
+				return "var(--green-background-color)"
+			case "Blue":
+				return "var(--blue-background-color)"
+			case "Yellow":
+				return "var(--yellow-background-color)"
+			case "Purple":
+				return "var(--purple-background-color)"
+			case "Orange":
+				return "var(--orange-background-color)"
+			default:
+				return "var(--unknown-background-color)"
+		}
+	}
+
 </script>
 
 </html>
