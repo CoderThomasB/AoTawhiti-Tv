@@ -156,6 +156,23 @@
 		padding: 0.5em;
 		border-radius: 1em;
 	}
+
+	.Fullscreen-News-Item {
+		position: fixed;
+
+		color: white;
+
+		top: 0px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+
+		display: none;
+
+		z-index: 10;
+
+		background-color: black;
+	}
 </style>
 
 <head>
@@ -165,6 +182,13 @@
 </head>
 
 <body>
+	<div id="Fullscreen-News-Div">
+		<div class="Fullscreen-News-Item">
+			<span>Some Random Text</span>
+		</div>
+
+	</div>
+
 	<main>
 		<span id="This-Class-Text">
 			Now happening:
@@ -212,11 +236,15 @@
 			</samp>
 			<br>
 			<samp style="font-size: large;">
-				Thursday the 11<sup>th</sup> of March
+				Thursday the 11<sup>th</sup> of March<br>
+				at some place
 			</samp>
 			<br>
 			<samp style="font-size: medium;">
-				Other Info on athletics day need!
+				<ul style="padding: 1em;">
+					<li>arrange for your own transport</li>
+					<li>please take a paced morning tea and lunch</li>
+				</ul>
 			</samp>
 		</div>
 		<div class="News-Item">
@@ -236,6 +264,18 @@
 		</samp>
 	</footer>
 </body>
+<script>
+
+	console.log(document.cookie
+		.split('; ')
+		.find(row => row.startsWith('RoomName='))
+		.split('=')[1])
+
+	document.getElementById("Room-Name-Input").value = document.cookie
+		.split('; ')
+		.find(row => row.startsWith('RoomName='))
+		.split('=')[1]
+</script>
 <script>
 	function UpdateTimeDisplay() {
 		let TimeSpan = document.getElementById("Time")
@@ -431,13 +471,17 @@
 		} else {
 			NextClassSpan.style.display = "none"
 		}
-		
+
 	}, 1000)
 </script>
 <script>
 	function UpdateClassTitle() {
 		let ClassTitle = document.getElementById("Class-Title")
 		let body = document.querySelector("body")
+
+		if (NowBlock !== "NoRoomNameDefined") {
+			document.cookie = "RoomName=" + RoomName
+		}
 
 		ClassTitle.innerText = GetDisplayTextFoBlock(NowBlock)
 		body.style.backgroundColor = GetBackgroundCssColour()
@@ -514,6 +558,45 @@
 		}
 	}
 
+</script>
+<script>
+	var CurrentFullscreenNewsNumber = -1
+
+	function UpdateFullscreenNews() {
+		let FullscreenNewsItems = document.getElementsByClassName("Fullscreen-News-Item")
+
+		for (index in FullscreenNewsItems) {
+			try {
+				// console.	log(FullscreenNewsItems[index])
+				FullscreenNewsItems[index].style.display = "none"
+			} catch (e) { }
+		}
+
+		if (NowBlock === "MorningBreak" ||
+			NowBlock === "HomeBase" ||
+			NowBlock === "Lunch"
+		) {
+			try {
+				// console.log(CurrentFullscreenNewsNumber)
+				FullscreenNewsItems[CurrentFullscreenNewsNumber].style.display = "block"
+			} catch (e) { }
+		}
+	}
+
+	setInterval(UpdateFullscreenNews, 1000)
+</script>
+<script>
+	function CycleFullscreenNews() {
+		let FullscreenNewsItems = document.getElementsByClassName("Fullscreen-News-Item")
+
+		if (CurrentFullscreenNewsNumber > FullscreenNewsItems.length) {
+			CurrentFullscreenNewsNumber = -1
+		} else {
+			CurrentFullscreenNewsNumber++
+		}
+	}
+
+	setInterval(CycleFullscreenNews, 30000)
 </script>
 
 </html>
