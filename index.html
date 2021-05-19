@@ -7,8 +7,8 @@
 		--blue-background-color: hsl(197, 100%, 83%);
 		--red-background-color: hsl(0, 100%, 83%);
 		--purple-background-color: hsl(318, 100%, 83%);
-		--orange-background-color: hsl(51, 100%, 66%);
-		--yellow-background-color: hsl(71, 100%, 83%);
+		--orange-background-color: hsl(41, 100%, 69%);
+		--yellow-background-color: hsl(56, 100%, 83%);
 	}
 
 	body {
@@ -429,7 +429,7 @@
 		if (now.getDay() === 0) return "NoSchool"
 		if (now.getDay() === 6) return "NoSchool"
 
-		if (now.getHours() > 15) return "EndOfSchool"
+		if (now.getHours() >= 15) return "EndOfSchool"
 
 		if (now.getHours() < 9) return "BeforeSchool"
 
