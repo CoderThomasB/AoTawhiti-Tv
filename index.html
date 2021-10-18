@@ -53,7 +53,6 @@
 		margin: 0px;
 		padding: 0px;
 
-
 		flex-basis: auto;
 		flex-shrink: 0;
 		flex-grow: 0;
@@ -64,7 +63,6 @@
 		position: absolute;
 		top: 0px;
 		right: 0px;
-
 
 		display: flex;
 		flex-direction: row-reverse;
@@ -178,45 +176,36 @@
 </style>
 
 <head>
-	<title>
-		Ao Tawhiti Tv
-	</title>
+	<title>Ao Tawhiti Tv</title>
 </head>
 
 <body>
 	<div id="Fullscreen-News-Div">
 		<div class="Fullscreen-News-Item">
-			<samp style="font-size: 5em;">
-				Athletics Day
-			</samp>
-			<br>
-			<samp style="font-size: 3em;">
-				Thursday the 11<sup>th</sup> of March<br>
+			<samp style="font-size: 5em"> Athletics Day </samp>
+			<br />
+			<samp style="font-size: 3em">
+				Thursday the 11<sup>th</sup> of March<br />
 				at some place that I can't spell.
 			</samp>
-			<br><br>
-			<samp style="font-size: 2em;">
-				<ul style="padding: 1em;">
+			<br /><br />
+			<samp style="font-size: 2em">
+				<ul style="padding: 1em">
 					<li>arrange for your own transport</li>
 					<li>please take a paced morning tea and lunch</li>
 					<li>Also can you add stuff to this list?</li>
 				</ul>
 			</samp>
 		</div>
-
 	</div>
 
 	<main>
-		<span id="This-Class-Text">
-			Now happening:
-		</span>
-		<span id="Class-Title">
-			Loading...
-		</span>
+		<span id="This-Class-Text"> Now happening: </span>
+		<span id="Class-Title"> Loading... </span>
 		<div id="Class-Tags">
 			<div class="Class-Tag">
 				<label>Room name:</label>
-				<input oninput="RoomName = this.value; UpdateClassTitle()" type="text" id="Room-Name-Input">
+				<input oninput="RoomName = this.value; UpdateClassTitle()" type="text" id="Room-Name-Input" />
 			</div>
 			<div id="Block-Color-Div" class="Class-Tag">
 				<label>Block color:</label>
@@ -224,75 +213,69 @@
 			</div>
 		</div>
 		<div id="Date-Tags">
-			<span class="Date-Tag" id="Time">
-				1:29<sub>pm</sub>
-			</span>
-			<span class="Date-Tag" id="Date">
-				22<sub>th</sub> of Feb
-			</span>
+			<span class="Date-Tag" id="Time"> 1:29<sub>pm</sub> </span>
+			<span class="Date-Tag" id="Date"> 22<sub>th</sub> of Feb </span>
 			<span class="Date-Tag" id="Next-Class-Span">
 				10minutes until Next Class.
 			</span>
 		</div>
 
 		<div id="Credit">
-			<img src="https://lms.aotawhiti.school.nz/sites/all/themes/best_responsive/images/at_logo_white.png">
+			<img src="https://lms.aotawhiti.school.nz/sites/all/themes/best_responsive/images/at_logo_white.png" />
 			<span>
-				This website was created by Thomas Booker.
-				&#169; Thomas Booker.
+				This website was created by Thomas Booker. &#169; Thomas Booker.
 			</span>
 		</div>
 
-		<span id="News-Text">
-			News, Events And Information:
-		</span>
+		<span id="News-Text"> News, Events And Information: </span>
 	</main>
 	<footer id="News">
 		<div class="News-Item">
-			<samp style="font-size: xx-large;">
-				Athletics Day
-			</samp>
-			<br>
-			<samp style="font-size: large;">
-				Thursday the 11<sup>th</sup> of March<br>
+			<samp style="font-size: xx-large"> Athletics Day </samp>
+			<br />
+			<samp style="font-size: large">
+				Thursday the 11<sup>th</sup> of March<br />
 				at some place
 			</samp>
-			<br>
-			<samp style="font-size: medium;">
-				<ul style="padding: 1em;">
+			<br />
+			<samp style="font-size: medium">
+				<ul style="padding: 1em">
 					<li>arrange for your own transport</li>
 					<li>please take a paced morning tea and lunch</li>
 				</ul>
 			</samp>
 		</div>
 		<div class="News-Item">
-			<samp style="font-size: xx-large; text-align: center; display: block; margin-bottom: 0.4em;">
+			<samp style="
+						font-size: xx-large;
+						text-align: center;
+						display: block;
+						margin-bottom: 0.4em;
+					">
 				Weather
 			</samp>
 			<iframe id="widget-iframe" height="195"
 				src="https://services.metservice.com/weather-widget/widget?params=blue|medium|portrait|days-3|modern&loc=christchurch&type=urban"
-				allowtransparency="true" style="border:none; border-radius: 1em;"></iframe>
+				allowtransparency="true" style="border: none; border-radius: 1em"></iframe>
 		</div>
-		<samp style="
-		color:lightgray;
-		font-size: x-large;
-		margin-left: 1em;
-		">
+		<samp style="color: lightgray; font-size: x-large; margin-left: 1em">
 			No more news ...
 		</samp>
+		<br>
 	</footer>
 </body>
 <script>
-
-	console.log(document.cookie
-		.split('; ')
-		.find(row => row.startsWith('RoomName='))
-		.split('=')[1])
+	console.log(
+		document.cookie
+			.split("; ")
+			.find((row) => row.startsWith("RoomName="))
+			.split("=")[1]
+	)
 
 	document.getElementById("Room-Name-Input").value = document.cookie
-		.split('; ')
-		.find(row => row.startsWith('RoomName='))
-		.split('=')[1]
+		.split("; ")
+		.find((row) => row.startsWith("RoomName="))
+		.split("=")[1]
 </script>
 <script>
 	function UpdateTimeDisplay() {
@@ -301,29 +284,36 @@
 
 		let Now = new Date(Date.now())
 
-		let DateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+		let DateOptions = {
+			weekday: "long",
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+		}
 
 		TimeSpan.innerText = new Date(Date.now()).toLocaleTimeString()
-		DateSpan.innerText = new Date(Date.now()).toLocaleDateString("en-UK", DateOptions)
+		DateSpan.innerText = new Date(Date.now()).toLocaleDateString(
+			"en-UK",
+			DateOptions
+		)
 	}
 
 	setInterval(UpdateTimeDisplay, 100)
 </script>
 
 <script>
+		// var NotificationServerConnection;
+		// function ConnectToNotificationServer() {
+		// 	// Create WebSocket connection.
+		// 	NotificationServerConnection = new WebSocket("ws://" + location.hostname + ":8924" + location.pathname);
 
-	// var NotificationServerConnection;
-	// function ConnectToNotificationServer() {
-	// 	// Create WebSocket connection.
-	// 	NotificationServerConnection = new WebSocket("ws://" + location.hostname + ":8924" + location.pathname);
+		// 	// Listen for messages
+		// 	NotificationServerConnection.addEventListener('message', function (event) {
+		// 		console.log('Message from server ', event.data);
+		// 	});
+		// }
 
-	// 	// Listen for messages
-	// 	NotificationServerConnection.addEventListener('message', function (event) {
-	// 		console.log('Message from server ', event.data);
-	// 	});
-	// }
-
-	// ConnectToNotificationServer()
+		// ConnectToNotificationServer()
 </script>
 <script>
 	function IsValidPos(col, row) {
@@ -333,83 +323,83 @@
 	}
 
 	function GetBlockColour(col, row) {
-		if (col >= 8 && col <= 10 &&
-			row >= 2 && row <= 19
-		) return "Red"
-		if (col >= 8 && col <= 10 &&
-			row >= 21 && row <= 38
-		) return "Green"
-		if (col >= 8 && col <= 10 &&
-			row >= 41 && row <= 60
-		) return "Blue"
-		if (col >= 8 && col <= 10 &&
-			row >= 63 && row <= 83
-		) return "Purple"
-		if (col >= 2 && col <= 4 &&
-			row >= 63 && row <= 82
-		) return "Yellow"
+		if (col >= 8 && col <= 10 && row >= 2 && row <= 19) return "Red"
+		if (col >= 8 && col <= 10 && row >= 21 && row <= 38) return "Green"
+		if (col >= 8 && col <= 10 && row >= 41 && row <= 60) return "Blue"
+		if (col >= 8 && col <= 10 && row >= 63 && row <= 83) return "Purple"
+		if (col >= 2 && col <= 4 && row >= 63 && row <= 82) return "Yellow"
 
-		return false
+		return false;
 	}
 
 	var TimeTableData = {
-		"Red": {},
-		"Green": {},
-		"Blue": {},
-		"Purple": {},
-		"Yellow": {},
+		Red: {},
+		Green: {},
+		Blue: {},
+		Purple: {},
+		Yellow: {},
 	}
+
+	const SheetTab = "Term3"
 
 	function UpdateTimeTableData() {
-		var xhttp = new XMLHttpRequest();
-		xhttp.onload = () => {
-			let spreadsheetsJSON = JSON.parse(xhttp.responseText)
-			let ColRowLookup = {}
-			spreadsheetsJSON.feed.entry.forEach(element => {
-				// console.log(element)
-				let col = parseInt(element["gs$cell"].col);
-				let row = parseInt(element["gs$cell"].row);
-				let text = element["gs$cell"]["$t"]
+			fetch(
+				`https://sheets.googleapis.com/v4/spreadsheets/1MOTvNV6NNkCuLdYN3JU2ctiFhELxWg1EW_qusrWEGHo/values/${SheetTab}!A1:P106/?key=AIzaSyC1dF2oxynDo211IkIY5KLoYzxmd8U8z9A`)
+			.then(response => response.json())
+			.then(doc => {
+				let ColRowLookup = {}
 
-				if (!IsValidPos(col, row)) return
+				doc.values.forEach((_element, _row) => {
+					_element.forEach((element, _col) => {
+						const row = _row + 1
+						const col = _col + 1
 
-				let BlockColour = GetBlockColour(col, row)
-				if (!BlockColour) return
+						if (!IsValidPos(col, row)) return
 
-				if ((col - 1) % 3 === 0) {
-					TimeTableData[BlockColour][text] = {}
-					if (ColRowLookup[col] === undefined) ColRowLookup[col] = {}
-					ColRowLookup[col][row] = text
-				}
-			});
-			spreadsheetsJSON.feed.entry.forEach(element => {
-				// console.log(element)
-				let col = parseInt(element["gs$cell"].col);
-				let row = parseInt(element["gs$cell"].row);
-				let text = element["gs$cell"]["$t"]
+						let BlockColour = GetBlockColour(col, row)
+						if (!BlockColour) return
 
-				if (!IsValidPos(col, row)) return
+						if ((col - 1) % 3 === 0) {
+							TimeTableData[BlockColour][element] = {}
+							if (ColRowLookup[col] === undefined) ColRowLookup[col] = {}
+							ColRowLookup[col][row] = element
+						}
+					})
+				})
 
-				let BlockColour = GetBlockColour(col, row)
-				if (!BlockColour) return
+				console.log(ColRowLookup)
 
-				// console.log(col)
-				if ((col - 1) % 3 === 1) {
-					let RoomName = ColRowLookup[col + 2][row]
-					TimeTableData[BlockColour][RoomName].code = text
-				}
-				if ((col - 1) % 3 === 2) {
-					let RoomName = ColRowLookup[col + 1][row]
-					TimeTableData[BlockColour][RoomName].teacher = text
-				}
-			});
-			// console.log(TimeTableData)
-		};
-		xhttp.open("GET", "https://spreadsheets.google.com/feeds/cells/1MOTvNV6NNkCuLdYN3JU2ctiFhELxWg1EW_qusrWEGHo/1/public/full?alt=json", true);
-		xhttp.send();
+				doc.values.forEach((_element, _row) => {
+					_element.forEach((element, _col) => {
+						const row = _row + 1
+						const col = _col + 1
+
+						if (!IsValidPos(col, row)) return
+
+						let BlockColour = GetBlockColour(col, row)
+						if (!BlockColour) return
+
+
+						// console.log(col)
+						if ((col - 1) % 3 === 1) {
+							let RoomName = ColRowLookup[col + 2][row]
+							if (TimeTableData[BlockColour][RoomName] === undefined) TimeTableData[
+								BlockColour][RoomName] = {}
+							TimeTableData[BlockColour][RoomName].code = element
+						}
+						if ((col - 1) % 3 === 2) {
+							let RoomName = ColRowLookup[col + 1][row]
+							if (TimeTableData[BlockColour][RoomName] === undefined) TimeTableData[
+								BlockColour][RoomName] = {}
+							TimeTableData[BlockColour][RoomName].teacher = element
+						}
+					})
+				})
+				console.log(TimeTableData)
+			})
 	}
 
-	// setInterval(UpdateTimeTableData, 10000)
+		// setInterval(UpdateTimeTableData, 10000)
 </script>
 <script>
 	var RoomName = document.getElementById("Room-Name-Input").value
@@ -425,7 +415,8 @@
 			TimeTableData["Green"][RoomName] == undefined &&
 			TimeTableData["Purple"][RoomName] == undefined &&
 			TimeTableData["Yellow"][RoomName] == undefined
-		) return "NoRoomNameDefined"
+		)
+			return "NoRoomNameDefined"
 
 		if (now.getDay() === 0) return "NoSchool"
 		if (now.getDay() === 6) return "NoSchool"
@@ -485,11 +476,11 @@
 		let NextClassSpan = document.getElementById("Next-Class-Span")
 		if (NextBlock !== NowBlock) {
 			NextClassSpan.style.display = "block"
-			NextClassSpan.innerText = "Next up is " + GetDisplayTextFoBlock(NextBlock)
+			NextClassSpan.innerText =
+				"Next up is " + GetDisplayTextFoBlock(NextBlock)
 		} else {
 			NextClassSpan.style.display = "none"
 		}
-
 	}, 1000)
 </script>
 <script>
@@ -575,13 +566,14 @@
 				return "var(--unknown-background-color)"
 		}
 	}
-
 </script>
 <script>
 	var CurrentFullscreenNewsNumber = -1
 
 	function UpdateFullscreenNews() {
-		let FullscreenNewsItems = document.getElementsByClassName("Fullscreen-News-Item")
+		let FullscreenNewsItems = document.getElementsByClassName(
+			"Fullscreen-News-Item"
+		)
 
 		for (index in FullscreenNewsItems) {
 			try {
@@ -590,13 +582,15 @@
 			} catch (e) { }
 		}
 
-		if (NowBlock === "MorningBreak" ||
+		if (
+			NowBlock === "MorningBreak" ||
 			NowBlock === "HomeBase" ||
 			NowBlock === "Lunch"
 		) {
 			try {
 				// console.log(CurrentFullscreenNewsNumber)
-				FullscreenNewsItems[CurrentFullscreenNewsNumber].style.display = "block"
+				FullscreenNewsItems[CurrentFullscreenNewsNumber].style.display =
+					"block"
 			} catch (e) { }
 		}
 	}
@@ -605,7 +599,9 @@
 </script>
 <script>
 	function CycleFullscreenNews() {
-		let FullscreenNewsItems = document.getElementsByClassName("Fullscreen-News-Item")
+		let FullscreenNewsItems = document.getElementsByClassName(
+			"Fullscreen-News-Item"
+		)
 
 		if (CurrentFullscreenNewsNumber > FullscreenNewsItems.length) {
 			CurrentFullscreenNewsNumber = -1
